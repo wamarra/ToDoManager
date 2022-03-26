@@ -8,7 +8,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const Routes = () => {
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator screenOptions={{headerMode: 'screen'}}>
       <Stack.Screen name="App" component={App} options={{headerShown: false}} />
       <Stack.Screen
         name="Login"
