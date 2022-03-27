@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const TaskListView = ({tasks}) => {
+const TaskListView = ({tasks, navigation}) => {
   const renderSectionHeader = React.useCallback(sectionData => {
     return (
       <View style={styles.headerConteiner}>
@@ -21,16 +21,27 @@ const TaskListView = ({tasks}) => {
     );
   }, []);
 
-  const renderItem = React.useCallback(itemData => {
-    return (
-      <TouchableOpacity>
-        <View style={styles.itemConteiner}>
-          <Text style={styles.itemTextTitle}>{itemData.item.title}</Text>
-          <Text>{itemData.item.resume}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }, []);
+  const onClickTask = React.useCallback(
+    task => {
+      const {navigate} = navigation;
+      navigate('Task', {task});
+    },
+    [navigation],
+  );
+
+  const renderItem = React.useCallback(
+    itemData => {
+      return (
+        <TouchableOpacity onPress={() => onClickTask(itemData.item)}>
+          <View style={styles.itemConteiner}>
+            <Text style={styles.itemTextTitle}>{itemData.item.title}</Text>
+            <Text style={styles.itemTextSubtitle}>{itemData.item.resume}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    },
+    [onClickTask],
+  );
 
   return (
     <SectionList
@@ -67,12 +78,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'silver',
+    backgroundColor: '#bdcdd9',
     borderRadius: 25,
     marginTop: 10,
   },
   headerTagConteiner: {
-    backgroundColor: 'gray',
+    backgroundColor: '#7d91a4',
     height: 35,
     width: 35,
     alignItems: 'center',
@@ -84,19 +95,25 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   headerText: {
+    color: '#6e7c88',
     fontSize: 16,
     marginLeft: 10,
   },
   itemConteiner: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F3F2F0',
+    backgroundColor: '#eef2f7',
     marginTop: 5,
     padding: 10,
     height: 75,
   },
   itemTextTitle: {
     fontSize: 22,
+    color: '#69757e',
+  },
+  itemTextSubtitle: {
+    fontSize: 12,
+    color: '#a0aebc',
   },
 });
 

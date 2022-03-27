@@ -3,15 +3,14 @@ import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import TaskListView from '../components/TaskListView';
 import {readTasksFromFirebaseAsync} from '../services/FirebaseApi';
 
-const imgChecList = require('../assets/checklist.png');
 const imgPlus = require('../assets/plus.png');
 
-const ToDoTasks = props => {
+const ToDoTasks = ({navigation}) => {
   const [tasks, setTasks] = React.useState([]);
 
   const goToTask = React.useCallback(
-    () => props.navigation.navigate('Task'),
-    [props.navigation],
+    () => navigation.navigate('Task'),
+    [navigation],
   );
 
   const fetchTasks = React.useCallback(
@@ -25,7 +24,7 @@ const ToDoTasks = props => {
 
   return (
     <View style={styles.container}>
-      <TaskListView tasks={tasks} />
+      <TaskListView tasks={tasks} navigation={navigation} />
       <TouchableOpacity style={styles.floatButton} onPress={goToTask}>
         <Image source={imgPlus} style={styles.img} />
       </TouchableOpacity>

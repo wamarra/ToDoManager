@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   App,
@@ -15,7 +16,12 @@ const Tab = createMaterialTopTabNavigator();
 
 const Routes = () => {
   return (
-    <Stack.Navigator screenOptions={{headerMode: 'screen'}}>
+    <Stack.Navigator
+      screenOptions={{
+        headerMode: 'screen',
+        headerStyle: {backgroundColor: '#2e5780'},
+        headerTintColor: 'white',
+      }}>
       <Stack.Screen name="App" component={App} options={{headerShown: false}} />
       <Stack.Screen
         name="Login"
@@ -31,11 +37,24 @@ const Routes = () => {
 
 export const TaskTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      sceneContainerStyle={styles.container}
+      screenOptions={() => ({
+        tabBarItemStyle: {backgroundColor: '#bdcdd9'},
+        tabBarIndicatorStyle: {backgroundColor: '#91a3b3'},
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: '#91a3b3',
+      })}>
       <Tab.Screen name="To Do" component={ToDoTasks} />
       <Tab.Screen name="Done" component={DoneTasks} />
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+  },
+});
 
 export default Routes;

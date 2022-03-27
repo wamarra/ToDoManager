@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {createUserOnFirebaseAsync} from '../services/FirebaseApi';
 
-const img = require('../assets/TodoList.png');
+const img = require('../assets/check.png');
 
 const Register = props => {
   const [email, setEmail] = React.useState('');
@@ -69,7 +69,7 @@ const Register = props => {
   );
 };
 
-Register.navigationOptions = screenProps => ({
+Register.navigationOptions = () => ({
   title: 'Register',
 });
 
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#69757e',
     marginLeft: 20,
   },
   bottomView: {

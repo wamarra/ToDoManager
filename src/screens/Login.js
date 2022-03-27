@@ -12,7 +12,7 @@ import {
 import {signInOnFirebaseAsync} from '../services/FirebaseApi';
 import {CommonActions} from '@react-navigation/native';
 
-const img = require('../assets/TodoList.png');
+const img = require('../assets/check.png');
 
 const Login = props => {
   const [email, setEmail] = React.useState(props.email);
@@ -20,12 +20,7 @@ const Login = props => {
 
   const signIn = React.useCallback(() => {
     signInOnFirebaseAsync(email, password)
-      .then(item => {
-        Alert.alert(
-          'User Authenticated',
-          `User ${item.user.email} has succesfuly been authenticated!`,
-        );
-
+      .then(() => {
         props.navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -61,7 +56,7 @@ const Login = props => {
         />
         <Button title="Sign In" onPress={signIn} />
         <View style={styles.textConteiner}>
-          <Text>Not a member? Let's </Text>
+          <Text style={styles.textNotMember}>Not a member? Let's </Text>
           <Text
             style={styles.textRegister}
             onPress={() => {
@@ -103,7 +98,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
   },
+  textNotMember: {
+    color: '#69757e',
+  },
   textRegister: {
+    color: '#69757e',
     fontWeight: 'bold',
   },
 });

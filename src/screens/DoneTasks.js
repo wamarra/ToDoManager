@@ -1,10 +1,25 @@
 import * as React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import TaskListView from '../components/TaskListView';
+import {readTasksFromFirebaseAsync} from '../services/FirebaseApi';
 
-const imgDone = require('../assets/done.png');
+const DoneTasks = props => {
+  const [tasks, setTasks] = React.useState([]);
 
-const DoneTasks = () => {
-  return <View style={styles.container} />;
+  const fetchTasks = React.useCallback(
+    items => setTasks(items.filter(t => t.isDone)),
+    [],
+  );
+
+  React.useEffect(() => {
+    readTasksFromFirebaseAsync(fetchTasks);
+  }, [fetchTasks]);
+
+  return (
+    <View style={styles.container}>
+      <TaskListView tasks={tasks} navigation={props.navigation} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

@@ -1,15 +1,17 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {AppRegistry, SafeAreaView, StyleSheet} from 'react-native';
+import {AppRegistry, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import Routes from './src/routes/Routes';
 import {name as appName} from './app.json';
 import {NavigationContainer} from '@react-navigation/native';
 import {initializeFirebaseApi} from './src/services/FirebaseApi';
 
-const wrappedRoutes = () => {
+const WrappedRoutes = () => {
   return (
     <NavigationContainer>
+      <SafeAreaView style={styles.statusbar} />
       <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" />
         <Routes />
       </SafeAreaView>
     </NavigationContainer>
@@ -17,6 +19,10 @@ const wrappedRoutes = () => {
 };
 
 const styles = StyleSheet.create({
+  statusbar: {
+    flex: 0,
+    backgroundColor: '#2e5780',
+  },
   container: {
     flex: 1,
   },
@@ -24,5 +30,5 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent(appName, () => {
   initializeFirebaseApi();
-  return wrappedRoutes;
+  return WrappedRoutes;
 });
