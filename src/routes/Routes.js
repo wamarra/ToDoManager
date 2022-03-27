@@ -36,11 +36,11 @@ const Routes = () => {
 
   return (
     <Stack.Navigator
-      screenOptions={({navigation}) => ({
+      screenOptions={({navigation, route}) => ({
         headerMode: 'screen',
         headerStyle: {backgroundColor: '#2e5780'},
         headerTintColor: 'white',
-        headerRight: () => signOut(navigation),
+        headerRight: () => route.name !== 'Register' && signOut(navigation),
       })}>
       <Stack.Screen name="App" component={App} options={{headerShown: false}} />
       <Stack.Screen

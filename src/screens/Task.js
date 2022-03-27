@@ -17,6 +17,10 @@ const Task = props => {
   const [priority, setPriority] = React.useState(true);
   const [isDone, setIsDone] = React.useState(false);
 
+  const trackColor = React.useMemo(() => {
+    return {true: '#2e5780', false: 'gray'};
+  }, []);
+
   const saveTask = React.useCallback(() => {
     if (!title) {
       Alert.alert('Erro Saving', 'Title is required');
@@ -63,7 +67,7 @@ const Task = props => {
         <Switch
           value={priority}
           onValueChange={setPriority}
-          trackColor={{true: '#2e5780', false: 'gray'}}
+          trackColor={trackColor}
         />
         <Text style={styles.switchText}>Hight Priority</Text>
       </View>
@@ -71,7 +75,7 @@ const Task = props => {
         <Switch
           value={isDone}
           onValueChange={setIsDone}
-          trackColor={{true: '#2e5780', false: 'gray'}}
+          trackColor={trackColor}
         />
         <Text style={styles.switchText}>Is Done?</Text>
       </View>
