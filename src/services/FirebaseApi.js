@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/database';
 
 const config = {
   apiKey: 'AIzaSyDtVC3VQ1Z8XzQYDkWwnTOC_NFo8ny5c90',
@@ -40,5 +41,26 @@ export const currentFirebaseUser = () => {
         unsubscribe();
       },
     );
+  });
+};
+
+export const writeTaskOnFirebaseAsync = async task => {
+  const user = await currentFirebaseUser();
+  const tasksReference = firebase.database().ref(user.uid);
+  const key = tasksReference.child('tasks').push().key;
+  return await tasksReference.child(`tasks/${key}`).update(task);
+};
+
+export const readTasksFromFirebaseAsync = async listener => {
+  const user = await currentFirebaseUser();
+  const tasksReference = firebase.database().ref(user.uid).child('tasks');
+  tasksReference.on('value', snapshot => {
+    const tasks = [];
+    snapshot.forEach(element => {
+      const task = element.val();
+      task.key = element.key;
+      tasks.push(task);
+    });
+    listener(tasks);
   });
 };
