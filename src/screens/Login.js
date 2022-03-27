@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  Platform,
 } from 'react-native';
 import {signInOnFirebaseAsync} from '../services/FirebaseApi';
 import {CommonActions} from '@react-navigation/native';
@@ -54,7 +55,11 @@ const Login = props => {
           value={password}
           onChangeText={text => setPassword(text)}
         />
-        <Button title="Sign In" onPress={signIn} />
+        <Button
+          color={Platform.OS === 'android' && '#2e5780'}
+          title="Sign In"
+          onPress={signIn}
+        />
         <View style={styles.textConteiner}>
           <Text style={styles.textNotMember}>Not a member? Let's </Text>
           <Text

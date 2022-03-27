@@ -9,6 +9,7 @@ import {
   Text,
   Alert,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import {createUserOnFirebaseAsync} from '../services/FirebaseApi';
 
@@ -62,7 +63,11 @@ const Register = props => {
             value={password}
             onChangeText={text => setPassword(text)}
           />
-          <Button title="Register User" onPress={createUser} />
+          <Button
+            color={Platform.OS === 'android' && '#2e5780'}
+            title="Register User"
+            onPress={createUser}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

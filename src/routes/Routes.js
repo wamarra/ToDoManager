@@ -12,6 +12,7 @@ import {
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Icon from 'react-native-ionicons';
 import {signOutFirebaseAsync} from '../services/FirebaseApi';
+import {CommonActions} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -24,10 +25,15 @@ const Routes = () => {
         ios="log-out"
         android="md-log-out"
         size={24}
-        color="#fff"
+        color="#abc7ff"
         onPress={() => {
           signOutFirebaseAsync();
-          navigation.navigate('Login');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'Login'}],
+            }),
+          );
         }}
       />
     ),
@@ -39,7 +45,7 @@ const Routes = () => {
       screenOptions={({navigation, route}) => ({
         headerMode: 'screen',
         headerStyle: {backgroundColor: '#2e5780'},
-        headerTintColor: 'white',
+        headerTintColor: '#abc7ff',
         headerRight: () => route.name !== 'Register' && signOut(navigation),
       })}>
       <Stack.Screen name="App" component={App} options={{headerShown: false}} />

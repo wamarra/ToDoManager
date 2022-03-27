@@ -7,6 +7,7 @@ import {
   Button,
   StyleSheet,
   Alert,
+  Platform,
 } from 'react-native';
 import {writeTaskOnFirebaseAsync} from '../services/FirebaseApi';
 
@@ -79,7 +80,11 @@ const Task = props => {
         />
         <Text style={styles.switchText}>Is Done?</Text>
       </View>
-      <Button style={styles.button} title="Save" onPress={saveTask} />
+      <Button
+        color={Platform.OS === 'android' && '#2e5780'}
+        title="Save"
+        onPress={saveTask}
+      />
     </View>
   );
 };
