@@ -23,7 +23,7 @@ const Task = props => {
       return;
     }
     if (!resume) {
-      Alert.alert('Erro Saving', 'resume is required');
+      Alert.alert('Erro Saving', 'Resume is required');
       return;
     }
 

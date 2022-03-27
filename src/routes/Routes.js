@@ -10,18 +10,38 @@ import {
   Task,
 } from '../screens/Screens';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import Icon from 'react-native-ionicons';
+import {signOutFirebaseAsync} from '../services/FirebaseApi';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 const Routes = () => {
+  const signOut = React.useCallback(
+    navigation => (
+      <Icon
+        style={styles.icon}
+        ios="log-out"
+        android="md-log-out"
+        size={24}
+        color="#fff"
+        onPress={() => {
+          signOutFirebaseAsync();
+          navigation.navigate('Login');
+        }}
+      />
+    ),
+    [],
+  );
+
   return (
     <Stack.Navigator
-      screenOptions={{
+      screenOptions={({navigation}) => ({
         headerMode: 'screen',
         headerStyle: {backgroundColor: '#2e5780'},
         headerTintColor: 'white',
-      }}>
+        headerRight: () => signOut(navigation),
+      })}>
       <Stack.Screen name="App" component={App} options={{headerShown: false}} />
       <Stack.Screen
         name="Login"
@@ -41,7 +61,7 @@ export const TaskTab = () => {
       sceneContainerStyle={styles.container}
       screenOptions={() => ({
         tabBarItemStyle: {backgroundColor: '#bdcdd9'},
-        tabBarIndicatorStyle: {backgroundColor: '#91a3b3'},
+        tabBarIndicatorStyle: {color: '#2e5780'},
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#91a3b3',
       })}>
@@ -54,6 +74,9 @@ export const TaskTab = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+  },
+  icon: {
+    paddingRight: 20,
   },
 });
 

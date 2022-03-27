@@ -64,3 +64,7 @@ export const readTasksFromFirebaseAsync = async listener => {
     listener(tasks);
   });
 };
+
+export const signOutFirebaseAsync = async () => {
+  return await firebase.auth().signOut();
+};
