@@ -66,8 +66,8 @@ export const TaskTab = () => {
     <Tab.Navigator
       sceneContainerStyle={styles.container}
       screenOptions={() => ({
-        tabBarItemStyle: {backgroundColor: '#bdcdd9'},
-        tabBarIndicatorStyle: {color: '#2e5780'},
+        tabBarItemStyle: {backgroundColor: '#bdcdd9', height: 45},
+        tabBarIndicatorStyle: {backgroundColor: '#91a3b3', top: 45},
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#91a3b3',
       })}>
