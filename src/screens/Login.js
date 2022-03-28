@@ -2,13 +2,13 @@ import * as React from 'react';
 import {
   Alert,
   Button,
-  Image,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
   View,
   Platform,
+  Animated,
 } from 'react-native';
 import {signInOnFirebaseAsync} from '../services/FirebaseApi';
 import {CommonActions} from '@react-navigation/native';
@@ -18,6 +18,40 @@ const img = require('../assets/check.png');
 const Login = props => {
   const [email, setEmail] = React.useState(props.email);
   const [password, setPassword] = React.useState('');
+  const [opacity, setOpacity] = React.useState(new Animated.Value(0));
+
+  const translation = React.useRef(new Animated.Value(100000)).current;
+
+  const imageOpacity = {
+    opacity: opacity,
+    transform: [
+      {
+        scale: opacity.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+        }),
+      },
+    ],
+  };
+
+  const translateContent = {
+    transform: [
+      {
+        translateY: translation.interpolate({
+          inputRange: [0, 100],
+          outputRange: [0, 1],
+        }),
+      },
+    ],
+  };
+
+  const onLoad = React.useCallback(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [opacity]);
 
   const signIn = React.useCallback(() => {
     signInOnFirebaseAsync(email, password)
@@ -34,12 +68,25 @@ const Login = props => {
       });
   }, [email, password, props.navigation]);
 
+  React.useEffect(() => {
+    Animated.timing(translation, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+    setOpacity(actual => actual ?? new Animated.Value(0));
+  }, [translation]);
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.topView}>
-        <Image style={styles.img} source={img} />
+        <Animated.Image
+          onLoad={onLoad}
+          style={[imageOpacity, styles.img]}
+          source={img}
+        />
       </View>
-      <View style={styles.bottomView}>
+      <Animated.View style={[translateContent, styles.bottomView]}>
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -70,7 +117,7 @@ const Login = props => {
             Register
           </Text>
         </View>
-      </View>
+      </Animated.View>
     </KeyboardAvoidingView>
   );
 };
